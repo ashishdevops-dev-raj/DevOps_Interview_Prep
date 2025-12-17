@@ -4,6 +4,7 @@ A comprehensive collection of DevOps resources, commands, interview questions, a
 
 ## 📚 Table of Contents
 
+0. [Common Interview Questions (0-3 Years)](#00-common-questions)
 1. [Linux](#01-linux)
 2. [Git & GitHub](#02-git-github)
 3. [Docker](#03-docker)
@@ -21,6 +22,11 @@ A comprehensive collection of DevOps resources, commands, interview questions, a
 
 ```
 devops-interview-prep/
+│
+├── 00-common-questions/
+│   ├── README.md
+│   ├── common-interview-questions.md
+│   └── experience-based-questions.md
 │
 ├── 01-linux/
 │   ├── commands.md
@@ -132,6 +138,14 @@ devops-interview-prep/
 ```
 
 ## 📖 Sections Overview
+
+### 00-common-questions
+Most frequently asked DevOps interview questions for 0-3 years experience:
+- Entry Level (0-1 year): Fundamental concepts and basic tools
+- Junior Level (1-2 years): Technical implementation and tool usage
+- Mid-Level (2-3 years): Advanced concepts and architecture design
+- Scenario-based questions and behavioral questions
+- Interview tips and preparation strategies
 
 ### 01-linux
 Essential Linux commands and concepts for DevOps engineers:
