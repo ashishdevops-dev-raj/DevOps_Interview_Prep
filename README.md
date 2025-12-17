@@ -14,6 +14,8 @@ A comprehensive collection of DevOps resources, commands, interview questions, a
 8. [Monitoring](#08-monitoring)
 9. [Terraform](#09-terraform)
 10. [Ansible](#10-ansible)
+11. [Python](#11-python)
+12. [Shell Scripting](#12-shell)
 
 ## 📁 Directory Structure
 
@@ -80,6 +82,21 @@ devops-interview-prep/
 │   ├── ansible.cfg.example
 │   ├── ansible-commands.md
 │   └── interview-questions.md
+│
+├── 11-python/
+│   ├── python-commands.md
+│   ├── interview-questions.md
+│   └── example-scripts/
+│       ├── devops-utils.py
+│       └── api-client.py
+│
+├── 12-shell/
+│   ├── shell-commands.md
+│   ├── interview-questions.md
+│   └── example-scripts/
+│       ├── system-monitor.sh
+│       ├── backup-script.sh
+│       └── log-analyzer.sh
 │
 ├── resume/
 │   └── devops_resume.pdf
@@ -162,6 +179,22 @@ Configuration management with Ansible:
 - Inventory management
 - 100 interview questions
 
+### 11-python
+Python scripting for DevOps:
+- Python commands and reference
+- DevOps utility functions
+- API client examples
+- Common modules and libraries
+- 100 interview questions
+
+### 12-shell
+Shell scripting for automation:
+- Shell commands reference
+- System monitoring scripts
+- Backup and log analysis scripts
+- Advanced shell features
+- 100 interview questions
+
 ## 🚀 Getting Started
 
 1. **Clone this repository**
@@ -201,6 +234,8 @@ To practice hands-on, you'll need:
 - Git installed
 - Terraform installed
 - Ansible installed
+- Python 3.x installed
+- Bash shell (Linux/Mac) or WSL (Windows)
 
 ## 📚 Additional Resources
 
@@ -211,19 +246,8 @@ To practice hands-on, you'll need:
 - [Linux Documentation](https://www.kernel.org/doc/)
 - [Terraform Documentation](https://www.terraform.io/docs/)
 - [Ansible Documentation](https://docs.ansible.com/)
-
-## 🤝 Contributing
-
-Feel free to:
-- Add more examples
-- Improve existing content
-- Fix errors
-- Add new topics
-- Share interview experiences
-
-## 📄 License
-
-This repository is for educational purposes. Feel free to use and modify as needed.
+- [Python Documentation](https://docs.python.org/)
+- [Bash Guide](https://www.gnu.org/software/bash/manual/)
 
 ## 💡 Interview Preparation Checklist
 
@@ -237,6 +261,8 @@ This repository is for educational purposes. Feel free to use and modify as need
 - [ ] Understand monitoring and observability
 - [ ] Learn Infrastructure as Code (Terraform)
 - [ ] Master configuration management (Ansible)
+- [ ] Learn Python scripting for automation
+- [ ] Master shell scripting for DevOps tasks
 - [ ] Practice explaining concepts clearly
 - [ ] Prepare for system design questions
 - [ ] Review your resume and projects
@@ -259,6 +285,7 @@ This repository is for educational purposes. Feel free to use and modify as need
 - **Cloud**: AWS, Azure, GCP
 - **Monitoring**: Prometheus, Grafana
 - **Infrastructure**: Terraform, Ansible
+- **Scripting**: Python, Bash/Shell
 
 ### Skills
 - Scripting (Bash, Python)
@@ -268,17 +295,4 @@ This repository is for educational purposes. Feel free to use and modify as need
 - Troubleshooting
 - Performance optimization
 
-## 📞 Support
-
-If you have questions or need clarification:
-1. Review the relevant section's documentation
-2. Check official documentation
-3. Practice hands-on
-4. Join DevOps communities
-
 ---
-
-**Good luck with your DevOps interview preparation! 🚀**
-
-Remember: Understanding concepts is more important than memorizing commands. Focus on why things work, not just how.
-
