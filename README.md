@@ -89,18 +89,45 @@ devops-interview-prep/
 ├── 12-shell/
 │   ├── shell-commands.md
 │   ├── interview-questions.md
-│   ├── example-scripts/
-│   │   ├── system-monitor.sh
-│   │   ├── backup-script.sh
-│   │   └── log-analyzer.sh
 │   └── scripts/
-│       ├── easy/ (10 scripts)
-│       ├── medium/ (10 scripts)
-│       └── advanced/ (10 scripts)
+│       ├── easy/
+│       │   ├── 01-hello-world.sh
+│       │   ├── 02-user-input.sh
+│       │   ├── 03-simple-calculator.sh
+│       │   ├── 04-file-exists.sh
+│       │   ├── 05-list-files.sh
+│       │   ├── 06-count-lines.sh
+│       │   ├── 07-current-date.sh
+│       │   ├── 08-simple-greeting.sh
+│       │   ├── 09-backup-simple.sh
+│       │   └── 10-display-env.sh
+│       ├── medium/
+│       │   ├── 11-file-operations.sh
+│       │   ├── 12-process-monitor.sh
+│       │   ├── 13-log-search.sh
+│       │   ├── 14-disk-usage-detail.sh
+│       │   ├── 15-user-management.sh
+│       │   ├── 16-network-check.sh
+│       │   ├── 17-text-processor.sh
+│       │   ├── 18-service-status.sh
+│       │   ├── 19-file-organizer.sh
+│       │   └── 20-system-info.sh
+│       └── advanced/
+│           ├── 21-advanced-backup.sh
+│           ├── 22-log-analyzer-advanced.sh
+│           ├── 23-system-monitor-advanced.sh
+│           ├── 24-automated-deployment.sh
+│           ├── 25-database-backup.sh
+│           ├── 26-security-audit.sh
+│           ├── 27-config-manager.sh
+│           ├── 28-health-check.sh
+│           ├── 29-batch-processor.sh
+│           └── 30-infrastructure-validator.sh
 │
 ├── resume/
-│   └── devops_resume.pdf
+│   └── (your resume files)
 │
+├── .gitignore
 └── README.md
 ```
 
@@ -111,43 +138,42 @@ Essential Linux commands and concepts for DevOps engineers:
 - File operations and permissions
 - Process management
 - System administration
-- Shell scripting examples
-- Common interview questions
+- Common interview questions (100 questions)
 
 ### 02-git-github
 Version control with Git and GitHub:
 - Git commands cheat sheet
 - Branching strategies
 - Common workflows
-- Interview questions covering Git concepts
+- 100 interview questions (Easy/Medium/High)
 
 ### 03-docker
 Containerization with Docker:
 - Docker commands reference
 - Dockerfile examples
 - Best practices
-- Container orchestration basics
+- 100 interview questions (Easy/Medium/High)
 
 ### 04-jenkins
 CI/CD with Jenkins:
 - Jenkinsfile examples
 - Pipeline syntax
 - Declarative and scripted pipelines
-- Integration patterns
+- 100 interview questions (Easy/Medium/High)
 
 ### 05-kubernetes
 Container orchestration with Kubernetes:
 - Kubernetes commands
 - Deployment and service configurations
 - Core concepts and architecture
-- Production best practices
+- 100 interview questions (Easy/Medium/High)
 
 ### 06-aws
 Amazon Web Services:
 - EC2, IAM, VPC documentation
 - AWS CLI commands
 - Architecture patterns
-- Security best practices
+- 100 interview questions (Easy/Medium/High)
 
 ### 07-ci-cd-project
 Complete CI/CD project demonstrating:
@@ -169,7 +195,7 @@ Infrastructure as Code with Terraform:
 - Configuration examples
 - State management
 - Modules and best practices
-- 100 interview questions
+- 100 interview questions (Easy/Medium/High)
 
 ### 10-ansible
 Configuration management with Ansible:
@@ -177,7 +203,7 @@ Configuration management with Ansible:
 - Playbook examples
 - Roles and collections
 - Inventory management
-- 100 interview questions
+- 100 interview questions (Easy/Medium/High)
 
 ### 11-python
 Python scripting for DevOps:
@@ -185,18 +211,17 @@ Python scripting for DevOps:
 - DevOps utility functions
 - API client examples
 - Common modules and libraries
-- 100 interview questions
+- 100 interview questions (Easy/Medium/High)
 
 ### 12-shell
 Shell scripting for automation:
 - Shell commands reference
 - 30 practical scripts organized by difficulty:
-  - Easy Level (10 scripts): Basic operations, user input, file checks
-  - Medium Level (10 scripts): File operations, process monitoring, log analysis
-  - Advanced Level (10 scripts): Automated deployment, security audit, infrastructure validation
-- System monitoring and backup examples
+  - **Easy Level** (10 scripts): Basic operations, user input, file checks
+  - **Medium Level** (10 scripts): File operations, process monitoring, log analysis
+  - **Advanced Level** (10 scripts): Automated deployment, security audit, infrastructure validation
 - Advanced shell features
-- 100 interview questions
+- 100 interview questions (Easy/Medium/High)
 
 ## 🚀 Getting Started
 
