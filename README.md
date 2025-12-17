@@ -24,11 +24,7 @@ devops-interview-prep/
 │
 ├── 01-linux/
 │   ├── commands.md
-│   ├── interview-questions.md
-│   └── shell-scripts/
-│       ├── disk-usage.sh
-│       ├── cpu-monitor.sh
-│       └── backup.sh
+│   └── interview-questions.md
 │
 ├── 02-git-github/
 │   ├── git-commands.md
@@ -93,10 +89,14 @@ devops-interview-prep/
 ├── 12-shell/
 │   ├── shell-commands.md
 │   ├── interview-questions.md
-│   └── example-scripts/
-│       ├── system-monitor.sh
-│       ├── backup-script.sh
-│       └── log-analyzer.sh
+│   ├── example-scripts/
+│   │   ├── system-monitor.sh
+│   │   ├── backup-script.sh
+│   │   └── log-analyzer.sh
+│   └── scripts/
+│       ├── easy/ (10 scripts)
+│       ├── medium/ (10 scripts)
+│       └── advanced/ (10 scripts)
 │
 ├── resume/
 │   └── devops_resume.pdf
@@ -190,8 +190,11 @@ Python scripting for DevOps:
 ### 12-shell
 Shell scripting for automation:
 - Shell commands reference
-- System monitoring scripts
-- Backup and log analysis scripts
+- 30 practical scripts organized by difficulty:
+  - Easy Level (10 scripts): Basic operations, user input, file checks
+  - Medium Level (10 scripts): File operations, process monitoring, log analysis
+  - Advanced Level (10 scripts): Automated deployment, security audit, infrastructure validation
+- System monitoring and backup examples
 - Advanced shell features
 - 100 interview questions
 
