@@ -1,0 +1,119 @@
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'myapp'
+        DOCKER_REGISTRY = 'docker.io'
+        DOCKER_CREDENTIALS = 'docker-hub-credentials'
+        KUBERNETES_NAMESPACE = 'default'
+        KUBECONFIG_CREDENTIALS = 'kubeconfig'
+    }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 1, unit: 'HOURS')
+        timestamps()
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                script {
+                    env.GIT_COMMIT_SHORT = sh(
+                        script: 'git rev-parse --short HEAD',
+                        returnStdout: true
+                    ).trim()
+                    env.IMAGE_TAG = "${env.BUILD_NUMBER}-${env.GIT_COMMIT_SHORT}"
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    echo "Building application..."
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        
+        stage('Test') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        sh 'npm run test:unit'
+                    }
+                }
+                stage('Integration Tests') {
+                    steps {
+                        sh 'npm run test:integration'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit 'test-results/**/*.xml'
+                }
+            }
+        }
+        
+        stage('Code Quality') {
+            steps {
+                script {
+                    sh 'npm run lint'
+                }
+            }
+        }
+        
+        stage('Docker Build') {
+            steps {
+                script {
+                    docker.withRegistry("https://${env.DOCKER_REGISTRY}", env.DOCKER_CREDENTIALS) {
+                        def customImage = docker.build("${env.DOCKER_IMAGE}:${env.IMAGE_TAG}")
+                        customImage.push()
+                        customImage.push("latest")
+                    }
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                script {
+                    sh "trivy image ${env.DOCKER_IMAGE}:${env.IMAGE_TAG} || true"
+                }
+            }
+        }
+        
+        stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    withKubeConfig([credentialsId: env.KUBECONFIG_CREDENTIALS]) {
+                        sh """
+                            kubectl set image deployment/myapp \
+                                myapp=${env.DOCKER_REGISTRY}/${env.DOCKER_IMAGE}:${env.IMAGE_TAG} \
+                                -n ${env.KUBERNETES_NAMESPACE} || \
+                            kubectl apply -f k8s/ -n ${env.KUBERNETES_NAMESPACE}
+                        """
+                        sh "kubectl rollout status deployment/myapp -n ${env.KUBERNETES_NAMESPACE}"
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo "Pipeline completed successfully!"
+        }
+        failure {
+            echo "Pipeline failed. Check logs for details."
+        }
+    }
+}
+

@@ -1,0 +1,63 @@
+# Example Ansible Configuration File
+# Copy to ansible.cfg and customize
+
+[defaults]
+# Inventory file
+inventory = inventory/production
+
+# Remote user
+remote_user = ubuntu
+
+# SSH settings
+private_key_file = ~/.ssh/id_rsa
+host_key_checking = False
+timeout = 10
+retry_files_enabled = False
+
+# Paths
+roles_path = roles
+collections_path = collections
+library = library
+module_utils = module_utils
+
+# Logging
+log_path = /var/log/ansible.log
+
+# Performance
+forks = 5
+gathering = smart
+fact_caching = jsonfile
+fact_caching_connection = /tmp/ansible_facts
+fact_caching_timeout = 3600
+
+# Display
+stdout_callback = yaml
+display_skipped_hosts = False
+display_ok_hosts = True
+
+# Privilege escalation
+become = True
+become_method = sudo
+become_user = root
+become_ask_pass = False
+
+# Vault
+vault_password_file = ~/.ansible/vault_pass
+
+[inventory]
+enable_plugins = host_list, script, auto, yaml, ini, toml
+
+[privilege_escalation]
+become = True
+become_method = sudo
+become_user = root
+become_ask_pass = False
+
+[paramiko_connection]
+record_host_keys = False
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s
+pipelining = True
+control_path = /tmp/ansible-ssh-%%h-%%p-%%r
+

@@ -1,0 +1,178 @@
+// Jenkinsfile - Declarative Pipeline Example
+pipeline {
+    agent any
+    
+    environment {
+        DOCKER_IMAGE = 'myapp:latest'
+        DOCKER_REGISTRY = 'registry.example.com'
+        KUBERNETES_NAMESPACE = 'production'
+    }
+    
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+        timeout(time: 1, unit: 'HOURS')
+        timestamps()
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+                script {
+                    env.GIT_COMMIT_SHORT = sh(
+                        script: 'git rev-parse --short HEAD',
+                        returnStdout: true
+                    ).trim()
+                }
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    echo "Building application..."
+                    sh 'npm install'
+                    sh 'npm run build'
+                }
+            }
+        }
+        
+        stage('Test') {
+            parallel {
+                stage('Unit Tests') {
+                    steps {
+                        sh 'npm run test:unit'
+                    }
+                }
+                stage('Integration Tests') {
+                    steps {
+                        sh 'npm run test:integration'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit 'test-results/**/*.xml'
+                    publishTestResults testResultsPattern: 'test-results/**/*.xml'
+                }
+            }
+        }
+        
+        stage('Code Quality') {
+            steps {
+                script {
+                    sh 'npm run lint'
+                    sh 'npm run sonar-scanner'
+                }
+            }
+            post {
+                always {
+                    publishHTML([
+                        reportDir: 'coverage',
+                        reportFiles: 'index.html',
+                        reportName: 'Coverage Report'
+                    ])
+                }
+            }
+        }
+        
+        stage('Docker Build') {
+            steps {
+                script {
+                    def customImage = docker.build("${env.DOCKER_IMAGE}")
+                    customImage.push()
+                    customImage.push("${env.GIT_COMMIT_SHORT}")
+                }
+            }
+        }
+        
+        stage('Security Scan') {
+            steps {
+                script {
+                    sh 'trivy image ${DOCKER_IMAGE}'
+                }
+            }
+        }
+        
+        stage('Deploy to Staging') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                script {
+                    sh '''
+                        kubectl set image deployment/myapp \
+                            myapp=${DOCKER_IMAGE} \
+                            -n staging
+                    '''
+                }
+            }
+        }
+        
+        stage('Deploy to Production') {
+            when {
+                branch 'main'
+            }
+            steps {
+                input message: 'Deploy to production?', ok: 'Deploy'
+                script {
+                    sh '''
+                        kubectl set image deployment/myapp \
+                            myapp=${DOCKER_IMAGE} \
+                            -n ${KUBERNETES_NAMESPACE}
+                    '''
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
+            script {
+                def duration = currentBuild.durationString
+                echo "Pipeline duration: ${duration}"
+            }
+        }
+        success {
+            emailext(
+                subject: "SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "Build successful!",
+                to: "${env.CHANGE_AUTHOR_EMAIL}"
+            )
+        }
+        failure {
+            emailext(
+                subject: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                body: "Build failed. Please check the console output.",
+                to: "${env.CHANGE_AUTHOR_EMAIL}"
+            )
+        }
+        unstable {
+            echo "Build is unstable"
+        }
+    }
+}
+
+// Alternative: Scripted Pipeline Example
+/*
+node {
+    stage('Checkout') {
+        checkout scm
+    }
+    
+    stage('Build') {
+        sh 'npm install'
+        sh 'npm run build'
+    }
+    
+    stage('Test') {
+        sh 'npm test'
+    }
+    
+    stage('Deploy') {
+        sh 'kubectl apply -f k8s/'
+    }
+}
+*/
+

@@ -1,0 +1,159 @@
+---
+# Example Ansible Playbook
+# This playbook demonstrates common Ansible patterns
+
+- name: Configure Web Servers
+  hosts: webservers
+  become: yes
+  vars:
+    nginx_version: "1.20.1"
+    app_user: "www-data"
+    app_dir: "/var/www/myapp"
+  
+  pre_tasks:
+    - name: Update package cache (Debian/Ubuntu)
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+    
+    - name: Update package cache (RHEL/CentOS)
+      yum:
+        name: "*"
+        state: latest
+      when: ansible_os_family == "RedHat"
+  
+  tasks:
+    - name: Install required packages
+      package:
+        name:
+          - nginx
+          - python3
+          - python3-pip
+        state: present
+    
+    - name: Create application user
+      user:
+        name: "{{ app_user }}"
+        system: yes
+        shell: /bin/bash
+        create_home: yes
+    
+    - name: Create application directory
+      file:
+        path: "{{ app_dir }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+        mode: '0755'
+    
+    - name: Copy application files
+      copy:
+        src: "{{ item }}"
+        dest: "{{ app_dir }}/"
+        owner: "{{ app_user }}"
+        group: "{{ app_user }}"
+      loop:
+        - index.html
+        - app.js
+        - style.css
+    
+    - name: Configure Nginx
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/myapp
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart nginx
+    
+    - name: Enable Nginx site
+      file:
+        src: /etc/nginx/sites-available/myapp
+        dest: /etc/nginx/sites-enabled/myapp
+        state: link
+      notify: restart nginx
+    
+    - name: Remove default Nginx site
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: restart nginx
+    
+    - name: Ensure Nginx is running and enabled
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+    
+    - name: Configure firewall
+      ufw:
+        rule: allow
+        name: "{{ item }}"
+      loop:
+        - 'Nginx Full'
+        - OpenSSH
+  
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+
+- name: Configure Database Servers
+  hosts: databases
+  become: yes
+  vars:
+    mysql_root_password: "{{ vault_mysql_root_password }}"
+    mysql_db_name: "myapp"
+    mysql_db_user: "appuser"
+    mysql_db_password: "{{ vault_mysql_db_password }}"
+  
+  tasks:
+    - name: Install MySQL
+      package:
+        name: mysql-server
+        state: present
+    
+    - name: Start and enable MySQL
+      systemd:
+        name: mysql
+        state: started
+        enabled: yes
+    
+    - name: Set MySQL root password
+      mysql_user:
+        name: root
+        password: "{{ mysql_root_password }}"
+        login_user: root
+        login_password: ""
+        check_implicit_admin: yes
+    
+    - name: Create database
+      mysql_db:
+        name: "{{ mysql_db_name }}"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+    
+    - name: Create database user
+      mysql_user:
+        name: "{{ mysql_db_user }}"
+        password: "{{ mysql_db_password }}"
+        priv: "{{ mysql_db_name }}.*:ALL"
+        state: present
+        login_user: root
+        login_password: "{{ mysql_root_password }}"
+    
+    - name: Configure MySQL bind address
+      lineinfile:
+        path: /etc/mysql/mysql.conf.d/mysqld.cnf
+        regexp: '^bind-address'
+        line: 'bind-address = 0.0.0.0'
+      notify: restart mysql
+  
+  handlers:
+    - name: restart mysql
+      systemd:
+        name: mysql
+        state: restarted
+
