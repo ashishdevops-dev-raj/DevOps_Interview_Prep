@@ -212,19 +212,6 @@ To practice hands-on, you'll need:
 - [Terraform Documentation](https://www.terraform.io/docs/)
 - [Ansible Documentation](https://docs.ansible.com/)
 
-## 🤝 Contributing
-
-Feel free to:
-- Add more examples
-- Improve existing content
-- Fix errors
-- Add new topics
-- Share interview experiences
-
-## 📄 License
-
-This repository is for educational purposes. Feel free to use and modify as needed.
-
 ## 💡 Interview Preparation Checklist
 
 - [ ] Review Linux commands and concepts
@@ -268,17 +255,4 @@ This repository is for educational purposes. Feel free to use and modify as need
 - Troubleshooting
 - Performance optimization
 
-## 📞 Support
-
-If you have questions or need clarification:
-1. Review the relevant section's documentation
-2. Check official documentation
-3. Practice hands-on
-4. Join DevOps communities
-
 ---
-
-**Good luck with your DevOps interview preparation! 🚀**
-
-Remember: Understanding concepts is more important than memorizing commands. Focus on why things work, not just how.
-
