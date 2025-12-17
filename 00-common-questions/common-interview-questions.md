@@ -440,26 +440,3 @@ Root cause analysis is identifying the underlying cause of a problem.
 #### 105. What motivates you in your DevOps career?
 (Show: passion for automation, problem-solving, continuous improvement)
 
-## Tips for Interview Success
-
-### Preparation
-- Review all sections in this repository
-- Practice explaining concepts in simple terms
-- Prepare examples from your experience
-- Research the company and role
-- Prepare questions to ask the interviewer
-
-### During Interview
-- Listen carefully to questions
-- Think before answering
-- Ask for clarification if needed
-- Use STAR method for behavioral questions (Situation, Task, Action, Result)
-- Be honest about what you don't know
-
-### Common Mistakes to Avoid
-- Don't memorize answers word-for-word
-- Don't pretend to know something you don't
-- Don't badmouth previous employers
-- Don't forget to ask questions
-- Don't be too technical without context
-
